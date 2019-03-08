@@ -6,7 +6,7 @@ package com.zdn;
  * @CreateDate: 2019/2/17
  * @Version: 1.0
  */
-public interface MyMap<K,V> {
+public interface ZMap<K,V> {
 
     /**
      * 向集合中插入数据

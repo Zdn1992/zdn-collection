@@ -6,7 +6,7 @@ package com.zdn;
  * @CreateDate: 2019/2/17
  * @Version: 1.0
  */
-public class MyHashMap<K, V> implements MyMap<K, V> {
+public class ZHashMap<K, V> implements ZMap<K, V> {
 
     /**
      * K,V节点 默认为null 进行懒加载
@@ -46,6 +46,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
             // 如果位置为null,直接将设置进去
             node = new Node<>(key, value, null);
             size++;
+            table[index] = node;
             return node.setValue(value);
         } else {
             // 如果当前数组位置的不为空
@@ -55,7 +56,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                 if (tempNode.getKey().equals(key) && tempNode.next.getKey() == key) {
                     return tempNode.next.setValue(value);
                 }
-                node = new Node<>(key, value, tempNode);
+                tempNode.next = new Node<>(key, value, null);
                 size ++;
             } else {
                 while (tempNode.next != null) {
@@ -66,19 +67,23 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                     // 已经到单项链表的最后一个节点了
                     if (tempNode.next == null) {
                         // 参数里面的node为链表头中node,就是第一个node
-                        node = new Node<>(key, value, tempNode);
+                        tempNode.next = new Node<>(key, value, null);
                         size++;
                     }
                     tempNode = tempNode.next;
                 }
             }
+
         }
-        table[index] = node;
-        return null;
+
+        // 后期扩展判断是否达到阈值,需要扩容
+        // resize();
+        return value;
     }
 
     @Override
     public V get(Object key) {
+        // 后期完善get方法实现逻辑
         return null;
     }
 
